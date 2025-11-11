@@ -44,7 +44,7 @@ Maven : gestion des dépendances et compilation
 
 3. Comment Lancer le Projet (Étapes Simples)
 
-Tu dois impérativement démarrer les services dans cet ordre :
+On doit impérativement démarrer les services dans cet ordre :
 
 discovery-service (port 8761)
 
@@ -60,7 +60,7 @@ Pourquoi cet ordre ?
 
 Les microservices ont besoin d’Eureka (1) et de la config (2) pour démarrer correctement.
 
-Ensuite, tu peux lancer les services métiers.
+Ensuite, on peut lancer les services métiers.
 
 
 4. Vérifications de l’Architecture (Explication Simple)
