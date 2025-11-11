@@ -1,45 +1,52 @@
 Projet E-commerce – Architecture Microservices
-Ce projet est une application backend de e-commerce construite en utilisant une architecture microservices.
-Chaque partie de l’application est séparée en petits services indépendants, ce qui rend le système plus flexible, plus robuste et plus facile à maintenir.
 
-1. Architecture Globale (Explication Simple)
+Ce projet est une application backend de e-commerce construite avec une architecture microservices.
+Chaque composant est séparé en petits services indépendants, ce qui rend le système flexible, robuste et facile à maintenir.
 
-L’application est composée de plusieurs microservices, chacun ayant un rôle bien précis :
+1. Architecture Globale
 
-config-server
-→ Fournit la configuration à tous les services depuis un dépôt Git.
+L’application est composée de plusieurs microservices, chacun ayant un rôle bien défini :
 
-discovery-service (Eureka)
-→ Sert d’annuaire où les services se déclarent pour pouvoir communiquer entre eux.
+🔧 config-server
 
-gateway-service
-→ Un seul point d’entrée pour toutes les requêtes HTTP.
-→ Il redirige les requêtes vers le bon service.
+→ Fournit à tous les services leur configuration à partir d’un dépôt Git externe.
 
-customer-service
-→ Gère les clients : création, consultation, etc.
+ discovery-service (Eureka)
 
-inventory-service
-→ Gère les produits : stock, liste, détails, etc.
+→ Joue le rôle d’annuaire où chaque microservice s’enregistre pour pouvoir être détecté par les autres.
 
-billing-service
-→ Gère les factures et communique avec les deux services précédents pour récupérer clients et produits.
+ gateway-service
 
-2. Technologie Utilisée
+→ Point d’entrée unique pour toutes les requêtes.
+→ Redirige les appels vers le microservice approprié.
+
+ customer-service
+
+→ Gère les clients : création, consultation, gestion des informations.
+
+ inventory-service
+
+→ Gère les produits : stock, détails, liste, etc.
+
+ billing-service
+
+→ Gère les factures et communique avec les services Clients et Produits pour composer une facture complète.
+
+2. Technologies Utilisées
 
 Java 21
 
-Spring Boot : pour créer chaque microservice
+Spring Boot – création des microservices
 
-Spring Cloud : pour la configuration, Eureka, la Gateway, etc.
+Spring Cloud – Config, Eureka, Gateway
 
-Spring Data JPA : accès et gestion de la base de données
+Spring Data JPA – gestion de la base de données
 
-OpenFeign : communication entre services
+OpenFeign – communication entre microservices
 
-H2 Database : base en mémoire pour le développement
+H2 Database – base en mémoire pour les tests
 
-Maven : gestion des dépendances et compilation
+Maven – gestion du projet et des dépendances
 
 
 3. Comment Lancer le Projet (Étapes Simples)
@@ -64,7 +71,7 @@ Ensuite, on peut lancer les services métiers.
 
 
 4. Vérifications de l’Architecture (Explication Simple)
-✅ a. Config Server Fonctionnel
+ a. Config Server Fonctionnel
 
 Le config-server fournit la configuration correcte quand on consulte l’URL :
 http://localhost:9999/customer-service/default
@@ -89,7 +96,7 @@ Tu dois voir les services enregistrés (CUSTOMER-SERVICE, INVENTORY-SERVICE, GAT
 S’ils sont marqués UP, tout fonctionne.
 
 5. Démonstration des Endpoints
-📌 a. Accès direct aux microservices
+ a. Accès direct aux microservices
 
 Chaque service expose ses propres endpoints :
 
@@ -110,3 +117,39 @@ Chaque microservice utilise sa propre base H2.
 Tu peux l’ouvrir via /h2-console.
 
 Elle montre bien les tables créées (clients, produits, factures…).
+
+
+d. Projections Spring Data REST Le projet utilise les projections pour afficher certaines vues d’entités. Exemple : n’afficher que l’email d’un client http://localhost:8081/api/customers/1?projection=email
+
+<img width="775" height="344" alt="image" src="https://github.com/user-attachments/assets/5ff40104-a973-4a96-a25b-64a8dd255994" />
+
+e. Fonction principale : Générer une Facture Complète
+
+C’est la partie la plus importante du projet.
+
+Quand on demande une facture :
+
+http://localhost:8888/billing-service/bills/1
+
+<img width="612" height="925" alt="image" src="https://github.com/user-attachments/assets/4198bf4f-29a5-4af5-85af-0f1fee854f06" />
+
+Le billing-service :
+
+Va chercher la facture dans sa base de données
+
+Appelle customer-service pour avoir les infos du client
+
+Appelle inventory-service pour chaque produit
+
+Regroupe tout dans un seul JSON complet
+
+C’est la preuve que les microservices collaborent correctement.
+
+6. Auteur
+
+Nom : Salma El Moudi
+
+Classe : 5IIR- G3
+
+Année : 2025–2026
+
