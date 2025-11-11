@@ -111,6 +111,24 @@ Produits :
 http://localhost:8082/api/products
 <img width="996" height="946" alt="image" src="https://github.com/user-attachments/assets/3ac74bff-6fca-4b0c-9938-1f581db4d0f2" />
 
+b. Accès via API Gateway
+
+Toutes les requêtes peuvent passer par la gateway :
+
+Clients via Gateway :
+
+http://localhost:8888/customer-service/api/customers
+<img width="776" height="944" alt="image" src="https://github.com/user-attachments/assets/42bf7ffe-4509-4e97-9888-375f71c50b0b" />
+
+
+
+Produits via Gateway :
+
+http://localhost:8888/inventory-service/api/products
+
+<img width="849" height="948" alt="image" src="https://github.com/user-attachments/assets/6b7aa367-305d-4e50-9a15-67d5d36ce1dc" />
+
+
 c. Base de données (H2)
 
 Chaque microservice utilise sa propre base H2.
